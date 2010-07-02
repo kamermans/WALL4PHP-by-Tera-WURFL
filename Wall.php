@@ -89,7 +89,9 @@ class Wall {
 
         global $_GET, $_SERVER;
         if (!$ua) {
-            $this->ua = $ua = isset($_GET['UA']) ? $_GET['UA'] : getenv('HTTP_USER_AGENT');
+            $this->ua = isset($_GET['UA']) ? $_GET['UA'] : getenv('HTTP_USER_AGENT');
+        }else{
+        	$this->ua = $ua;
         }
         if (defined('WALL_USE_TERA_WURFL') && WALL_USE_TERA_WURFL) {
         	if(TERA_WURFL_VERSION == 1){
@@ -98,11 +100,14 @@ class Wall {
         	}else{
         		// The class file was loaded in wall_prepend.php
         		$this->wurfl = new TeraWurfl();
+        		if(!$ua){
+        			$this->ua = WurflSupport::getUserAgent();
+        		}
         	}
         } else {
             $this->wurfl = new wurfl_class();
         }
-        $this->wurfl->GetDeviceCapabilitiesFromAgent($ua);
+        $this->wurfl->GetDeviceCapabilitiesFromAgent($this->ua);
         ob_start(Array($this, '_obCallBack'));
         register_shutdown_function(Array($this, '_obEndFlush'));
     }
