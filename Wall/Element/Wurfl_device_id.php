@@ -61,10 +61,10 @@ class WallElementWurfl_device_id extends WallElement {
             } else {
                 $this->writeln('<br/>');
             }
-            if (defined('WALL_USE_TERA_WURFL') && WALL_USE_TERA_WURFL && TERA_WURFL_VERSION >= 2){
-				$this->write('User agent (given): ' . $this->_wall->wurfl->userAgent);
+            if (defined('WALL_USE_TERA_WURFL') && WALL_USE_TERA_WURFL && TERA_WURFL_VERSION == 1){
+				$this->write('User agent (given): ' . $this->_wall->wurfl->user_agent);
        		}else{
-        		$this->write('User agent (given): ' . $this->_wall->wurfl->user_agent);
+        		$this->write('User agent (given): ' . $this->_wall->wurfl->userAgent);
        		}
         }
             

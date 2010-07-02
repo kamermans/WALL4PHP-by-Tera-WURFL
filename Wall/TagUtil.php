@@ -67,16 +67,29 @@ class TagUtil {
 //    return $prefmarkup;
         if (isset($_GET['markup']) && in_array($_GET['markup'], Array('wml', 'xhtmlmp', 'chtml'))) {
             return($_GET['markup']);
-	}
-        if (strpos($prefmarkup, 'html_wi_oma_xhtmlmp') !== false ||
-            strpos($prefmarkup, 'html_wi_w3_xhtmlbasic') !== false) {
-            return('xhtmlmp');
-        } else if (strpos($prefmarkup, 'html_wi_imode') !== false ||
-                   strpos($prefmarkup, 'html_web') !== false) {
-            return('chtml');
-        } else if (strpos($prefmarkup, 'wml') !== false) {
-            return('wml');
-	} else if (defined('WALL_PARSE_HTTP_ACCEPT') && WALL_PARSE_HTTP_ACCEPT) {
+		}
+		$support = array(
+			// XHTML-MP
+			'html_wi_oma_xhtmlmp_1_0' => 'xhtmlmp',
+			'html_wi_w3_xhtmlbasic' => 'xhtmlmp',
+			'html_web_4_0' => 'xhtmlmp',
+			// CHTML
+			'html_wi_imode' => 'chtml',
+			'html_web_3_2' => 'chtml',
+			'docomo_imode_html_3' => 'chtml',
+			'html_wi_mml_html' => 'chtml',
+			// WML
+			'wml_1_3' => 'wml',
+			'wml_1_2' => 'wml',
+			'wml_1_1' => 'wml',
+		);
+		$wml = array();
+		foreach($support as $signature => $markup){
+			if(strpos($prefmarkup, $signature) !== false){
+				return $markup;
+			}
+		}		
+        if (defined('WALL_PARSE_HTTP_ACCEPT') && WALL_PARSE_HTTP_ACCEPT) {
             #return 'wml';
             #return 'xhtmlmp';
             
@@ -126,15 +139,15 @@ class TagUtil {
                     
                 }
 
-                # IF EVERYTHING FAILS, RETURN WML
+                # IF EVERYTHING FAILS, RETURN XHTML-MP
             } else {
                 
-                return 'wml';
+                return 'xhtmlmp';
             
             }
                 
         } else {
-            return 'wml'; 
+            return 'xhtmlmp'; 
         }
     }
     

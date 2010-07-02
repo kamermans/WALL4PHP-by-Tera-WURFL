@@ -1,13 +1,13 @@
 In Wall4PHP 1.1_TeraWurfl2 since Wall4PHP 1.1
+v1.2
 *) Added support for the Tera-WURFL Remote Webservice
-
+*) Changed default markup if device is not detected to xhtml-mp
+*) Improved preferred markup detection code
+v1.1
 *) Improved User Agent Detection System to detect the actual User Agent even when Proxies
    and Opera Mini mask them.
-
 *) Added support for Tera-WURFL v2.x (Steve Kamerman, David, Alex).
-
 *) This version works with PHP Tools, Tera-WURFL 1.x and Tera-WURFL 2.x
-
 
 In Wall4PHP 1.1 since Wall4PHP 1.01
 
