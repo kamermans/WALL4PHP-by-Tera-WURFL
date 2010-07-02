@@ -83,7 +83,6 @@ class TagUtil {
 			'wml_1_2' => 'wml',
 			'wml_1_1' => 'wml',
 		);
-		$wml = array();
 		foreach($support as $signature => $markup){
 			if(strpos($prefmarkup, $signature) !== false){
 				return $markup;
