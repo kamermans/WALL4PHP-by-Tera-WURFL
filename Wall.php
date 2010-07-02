@@ -94,20 +94,28 @@ class Wall {
         	$this->ua = $ua;
         }
         if (defined('WALL_USE_TERA_WURFL') && WALL_USE_TERA_WURFL) {
-        	if(TERA_WURFL_VERSION == 1){
-        		require_once(WURFL_CLASS_FILE);
-	            $this->wurfl = new tera_wurfl();
-        	}else{
-        		// The class file was loaded in wall_prepend.php
-        		$this->wurfl = new TeraWurfl();
-        		if(!$ua){
-        			$this->ua = WurflSupport::getUserAgent();
-        		}
+        	switch(TERA_WURFL_VERSION){
+    			case 1:
+        			require_once(WURFL_CLASS_FILE);
+	        	    $this->wurfl = new tera_wurfl();
+	        	    $this->wurfl->getDeviceCapabilitiesFromAgent($this->ua);
+	        	    break;
+    			case 2:
+	        		// The class file was loaded in wall_prepend.php
+	        		$this->wurfl = new TeraWurfl();
+	        		if(!$ua) $this->ua = WurflSupport::getUserAgent();
+	        		$this->wurfl->getDeviceCapabilitiesFromAgent($this->ua);
+	        		break;
+    			case 'webservice':
+    				$this->wurfl = new TeraWurflRemoteClient(TERA_WURFL_WEBSERVICE_URL,TeraWurflRemoteClient::$FORMAT_JSON);
+        			if(!$ua) $this->ua = TeraWurflRemoteClient::getUserAgent();
+        			$this->wurfl->getCapabilitiesFromAgent($this->ua,$GLOBALS['WALLWurflCapabilities']);
+    				break;
         	}
         } else {
             $this->wurfl = new wurfl_class();
+            $this->wurfl->getDeviceCapabilitiesFromAgent($this->ua);
         }
-        $this->wurfl->GetDeviceCapabilitiesFromAgent($this->ua);
         ob_start(Array($this, '_obCallBack'));
         register_shutdown_function(Array($this, '_obEndFlush'));
     }

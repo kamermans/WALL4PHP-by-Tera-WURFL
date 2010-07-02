@@ -1,4 +1,5 @@
 In Wall4PHP 1.1_TeraWurfl2 since Wall4PHP 1.1
+*) Added support for the Tera-WURFL Remote Webservice
 
 *) Improved User Agent Detection System to detect the actual User Agent even when Proxies
    and Opera Mini mask them.

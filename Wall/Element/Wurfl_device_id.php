@@ -50,10 +50,10 @@ class WallElementWurfl_device_id extends WallElement {
     function doStartTag() {
         parent::doStartTag();
 
-        if (defined('WALL_USE_TERA_WURFL') && WALL_USE_TERA_WURFL && TERA_WURFL_VERSION >= 2){
-			$this->write('Device ID: ' . $this->_wall->wurfl->capabilities['id']);
+        if (defined('WALL_USE_TERA_WURFL') && WALL_USE_TERA_WURFL && TERA_WURFL_VERSION == 1){
+			$this->write('Device ID: ' . $this->_wall->wurfl->id);
        	}else{
-        	$this->write('Device ID: ' . $this->_wall->wurfl->id);
+        	$this->write('Device ID: ' . $this->_wall->wurfl->capabilities['id']);
        	}
         if ($this->ua) {
             if (strpos($this->preferred_markup, 'chtml') !== false) {
