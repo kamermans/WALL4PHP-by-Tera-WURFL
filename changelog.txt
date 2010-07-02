@@ -1,0 +1,164 @@
+In Wall4PHP 1.1_TeraWurfl2 since Wall4PHP 1.1
+
+*) Added support for Tera-WURFL v2.x (Steve Kamerman, David, Alex).
+
+*) This version works with PHP Tools, Tera-WURFL 1.x and Tera-WURFL 2.x
+
+
+In Wall4PHP 1.1 since Wall4PHP 1.01
+
+*) Great minor version number change.
+
+*) 100% compatible with PHP5.
+
+*) Works with Tera WURFL. You just need to download Tera WURFL, extract it into (already
+   created but empty) folder tera-wurfl at the Wall4PHP root. Then you will need to
+   configure it. When it's done, you need to change value of WALL_USE_TERA_WURFL
+   configuration constant (check with wall_prepend.php) and include
+   tera-wurfl/tera_wurfl_config.php, not wurfl/wurfl_config.php (with this release
+   wall_prepend.php choses which config to inlcude by value of WALL_USE_TERA_WURFL).
+   Thanks to Joan Blaas for reminding about this late todo list item.
+        Affected files: tera-wurfl/* (empty directory)
+                        wall_prepend.php
+                        Wall.php
+
+*) Added doctype for cHTML (Compact HTML 1.0 Draft) - thanks to Natalia Pujol.
+        Affected files: Wall/Element/Xmlpidtd.php
+        
+*) Fixed bad correlation of <tr> and <td> tags when attrib "colnum=1" - thanks to Natalia
+   Pujol.
+        Affected files: Wall/Element/Cool_menu.php
+
+*) Removed charset portion from content-type headers being sent by wall:document. With 
+   this LG KG800 (Chocolate) could not display page.
+        Affected files: Wall/Element/Document.php
+
+*) Fixed bug in preferred markup detection, if decision is based on HTTP_ACCEPT header. 
+   The problem was with missing 'break' statement after switch case. A little 
+   modification also was made - if browser reports that it likes text/html, we return 
+   xhtmlmp as preferred markup. 
+        Affected files: Wall/TagUtil.php
+
+*) Fixed logic bug in Wall object. Non critical.
+        Affected files: Wall.php
+        
+*) Fixed bug when no Accept HTTP header is present but Wall's WALL_PARSE_HTTP_ACCEPT
+   is defined. It caused no content rendered due unknown prefered markup.
+        Affected files: Wall/TagUtil.php
+
+*) Rewrote xhtml_preferred_charset anbd xhtmlmp_preferred_mime_type handling. If first
+   is "utf8", no problems. If "iso8859", we omit it, because there are too many subsets
+   of this encoding. Change affects only xhtml output (not chtml or wml), of course.
+        Affected files: Wall/Element/Document.php
+        
+*) Forgot to mention it in previous changelog, so here it goes: Wall4PHP from v1.01
+   does not generate a lot of whitespace itself. Still, this does not solve problem
+   with alternate_img and alike (tags, which are removed by Wall4PHP). Whitespace,
+   which occurs before and after those tags.
+        Affected files: Wall/Element/*
+
+*) Wall4PHP did not work as expected, if attribute value was inside single quotes (')
+   instead of double ("). Now it is fixed. Also, you can mix quotes (ex: attr="val'ue"
+   attr2='val"ue'). Parser should not go mad about it. If any bugs occure, you can
+   allways switch back to old version, by commenting out new regular expression
+   (inserting # at the start of line #94 in file Wall/wallXmlParser.php).
+        Affected files: Wall/wallXmlParser.php
+        
+*) Changed behaviour of <wall:menu> items, when autonumber is not set, or is set to
+   "false". In this case list is outputted (except when fancy one is brought up) with
+   <ul>, as opposed to <ol>. Sorry, Luca, hope this does not bring much problems around.
+   This feature was hugely requested.
+        Affected files: Wall/Element/A.php
+
+*) Small typo led to empty "size" attribute, when multiple was set to "true". Fixed.
+        Affected files: Wall/Element/Select.php
+
+*) HTML entities within attributes of any non-Wall elements were not decoded/encoded 
+   properly. For example, name="val&amp;ue" became name="val&amp;amp;ue". The same applied 
+   to other entities (&quot;, for example). Fixed, of course.
+        Affected files: Wall.php
+
+*) Checks on emptyok generated E_NOTICE and did not work. Fixed.
+        Affected files: Wall/Element/Input.php
+
+*) Latest WURFL.xml from CVS. As usual.
+        Affected files: wurfl/data/*
+
+
+In Wall4PHP 1.01 since Wall4PHP 1.0
+
+*) Updated Andrea's PHP Tools to version V2.1 Beta2 (hopefully "beta" is not for
+   "beta":)
+        Affected files: wurfl/*
+        
+*) Bundled with newest WURFL XML file (MD5: 760a4b88345a204d717bcf57605b9fe4)
+        Affected files: wurfl/data/wurfl.xml
+
+*) Added type="text/css" to <style> tag (wall:menu_css and wall:coolmenu_css elements)
+        Affected files: Wall/Element/Menu_css.php
+                        Wall/Element/Cool_menu_css.php
+
+*) Fixed default background colors within wall:menu_css, if colorize was set.
+        Affected files: Wall/Element/Menu_css.php
+
+*) Due to popular demand, I've added another optional GET parameter (besides UA). So,
+   if you open WALL4PHP page with GET parameter markup set to wml, xhtmlmp or chtml,
+   it will return specified content type, still for that device specified via user
+   agent or forced via UA GET parameter. example.php?UA=Nokia6600&markup=WML would force
+   rendering for Nokia 6600 (generic) within WML (though, default for this device is
+   XHTMLMP)
+        Affected files: Wall/TagUtil.php
+
+*) Changed default LOG_LEVEL to LOG_ERR (was LOG_INFO)
+        Affected files: wurfl/wurfl_config.php
+
+*) If device prefers other content-type (WURFL property xhtmlmp_preferred_mime_type),
+   we are kind enough to give it to it. Except when forced WML or CHTML, of course :)
+        Affected files: Wall/Element/Document.php
+
+*) Parser again. Modified Wall internal parser to behave when user mixes wall markup
+   with hard-coded wml/xhtml/chtml markup.
+        Affected files: Wall.php
+
+*) Moved closing tags (</wml> and </html>) from wall:document to wall:body  (to keep things
+   more clean, because start element for wall:document does not output anything, so,
+   end element should not too.
+        Affected files: Wall/Element/Body.php
+        Affected files: Wall/Element/Document.php
+
+*) Added two attributes to wall:img because of often request by community: width and height.
+   If ommited, no width and height is being applied.
+        Affected files: Wall/Element/Img.php
+
+
+
+
+In Wall4PHP 1.0 since Wall4PHP beta2
+
+*) All known bugs are fixed :)
+*) First stable release!
+
+
+
+
+In Wall4PHP beta2 since Wall4PHP beta1
+
+*) Fixed very very annoying bug in XML parser which would break WALL4PHP output. 
+*) Introduced IMG tag and headings (H1-H6).
+*) Replaced PHP short tags ("<?") with their long versions ("<?php") (in some files:)
+*) Modified example body.php ("<?=" to "<?php echo")
+*) Fixed bug that caused duplicate </body> at the end of document in XHTML mode.
+*) New example to reflect new changes - examples/beta2.php
+*) New example to reflect interaction with PHP and $wall object. (examples/php.php)
+*) Removed trailing spaces, which occured if we wrote something like:
+     <? require_once('../wall_prepend.php'); ?>
+     <wall:document><wall:xmlpidtd />
+   instead of 
+     <? require_once('../wall_prepend.php'); ?><wall:document><wall:xmlpidtd />
+*) PHP5 compatibility (get_class() issue, found by outstrung317)
+*) Fixed problem with long phone numbers in caller element. They were converted to
+   int and overflew. Now we do not convert any numbers to ints. We operate on
+   strings.
+*) Introduced ALTERNATE_IMG, HR, COOL_MENU, COOL_MENU_CSS and CELL tags.
+*) Added register_shutdown_function to flush output buffer, if an error occurs.
+*) Fixed bug with references in PHP 4.4.0
